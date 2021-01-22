@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object.defineProperty()</title>
+</head>
+
+<body>
+    <script>
+        /* 
+            直接在一个对象上定义一个新的属性，或者修改一个对象的现有属性
+                Object.defineProperty(obj, prop, descriptor)
+
+                get() { return value } // getter
+                set(value) {}  // setter
+                
+         */
+
+        /* 
+            需求：
+                1.给p添加一个新的属性：fullName = firstName + '-' + lastName
+                2.如果修改了firstName/lastName，fullName自动改变为对应的值
+                3.如果修改了fullName，firstName和lastName也自动改变为对应的值
+         */
+        const p = {
+            firstName: 'A',
+            lastName: 'B'
+        };
+        // p.fullName = p.firstName + '-' + p.lastName;
+        // console.log(p.fullName);
+
+
+        Object.defineProperty(p, 'fullName', { // 配置对象 ==> 属性描述符
+            /* 
+                当读取属性值时自动调用，将函数的返回值作为属性值，this是属性所在的对象
+            */
+            get() {
+                console.log('get()', this);
+                return this.firstName + '-' + this.lastName;
+            },
+            /* 
+                当修改了属性值后自动调用，用来监视属性值的变化，this是属性所在的对象
+            */
+            set(value) { // value是fullName最新的值
+                console.log('set()', value);
+                const names = value.split('-');
+                this.firstName = names[0];
+                this.lastName = names[1];
+            }
+        })
+
+        console.log(p.fullName); // A-B
+
+        p.firstName = 'C';
+        p.lastName = 'D';
+        console.log(p.fullName); // C-D
+
+        p.fullName = 'E-F';
+        console.log(p.firstName, p.lastName); // E  F
+
+
+        /*
+            关于回调函数的问题
+                1.什么时候执行
+                2.用来做什么
+                3.this是谁
+        */
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>插值表达式</title>
+</head>
+<body>
+    <!-- 1.插值表达式 -->
+    <div id="app1">
+        <h2>1.插值表达式</h2>
+        <p>{{ msg }}</p>
+        <p>{{ msg.toUpperCase() }}</p>
+        <p>{{ msg.split('') }}</p>
+        <p>{{ msg.split('').reverse().join('') }}</p>
+    </div>
+
+    <!-- 2.强制数据绑定 v-bind  --> 
+    <div id="app2">
+        <h2>2.强制数据绑定 v-bind</h2>
+        <a :href="url">去学习</a>
+    </div>
+
+    <!-- 3.绑定监听事件 v-on  -->
+    <div id="app3">
+        <h2>3.绑定监听事件 v-on</h2>
+        <button @click="handler">去学习</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app1',
+            data: {
+                msg: 'abcde'
+            }
+        })
+
+        new Vue({
+            el: '#app2',
+            data: {
+                url: 'http://atguigu.com',
+            }
+        })
+
+        new Vue({
+            el: '#app3',
+            data: {
+                url: 'http://atguigu.com',
+            },
+            methods: {
+                handler(){
+                    location.href = this.url;
+                }
+            },
+        })
+    </script>
+</body>
+</html>

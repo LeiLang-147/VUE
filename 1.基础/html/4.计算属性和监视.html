@@ -17,7 +17,14 @@
             当属性变化时，回调函数自动调用，在函数内部进行计算
         3.计算属性高级：
             通过getter/setter实现对属性数据的显示和监视
+
             计算属性存在缓存，多次读取只执行一次getter计算
+            首先会在计算属性的缓存中去查找，缓存中以对象的形式存值
+            首先看有没有要读的值，有的话就取值，没有就会在计算属性中去调用定义的计算属性方法
+            {
+                fullName1: 'A-B',
+                fullName3: 'A-B'
+            }
      -->
     <div id="app">
         姓：<input type="text" placeholder="First Name" v-model="firstName"><br>

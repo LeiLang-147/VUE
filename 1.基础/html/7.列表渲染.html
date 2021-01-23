@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染</title>
+    <style>
+        .info {
+            padding: 10px;
+            width: 240px;
+            overflow: hidden;
+        }
+        .info input{
+            margin-bottom: 10px;
+        }
+        .info button {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <ul>
+            <li v-for="item in person" :key="item.id">
+                <span>{{ item.name }}</span>----<span>{{ item.age }}</span>
+            </li>
+        </ul> -->
+        <div class="info">
+            姓名: <input type="text" placeholder="请输入姓名" v-model="name"><br>
+            年龄: <input type="number" placeholder="请输入年龄" v-model="age"><br>
+            <button @click="Add">添加</button>
+        </div>
+
+        <table border="1" cellspacing="0" cellpadding="5">
+            <tr>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="item in person" :key="item.id">
+                <td>{{ item.name }}</td>
+                <td>{{ item.age }}</td>
+                <td><button @click="Delete(item.id)">删除</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    name: '',
+                    age: '',
+                    person: [
+                        {
+                            id: 1,
+                            name: 'Jack',
+                            age: 18
+                        },
+                        {
+                            id: 2,
+                            name: 'Marray',
+                            age: 20
+                        },
+                        {
+                            id: 3,
+                            name: 'Bobo',
+                            age: 19
+                        },
+                    ]
+                }
+            },
+            methods: {
+                Delete(id) {
+                    console.log(id);
+                    this.person.forEach((item, index) => {
+                        if (item.id === id) {
+                            this.person.splice(index, 1);
+                        }
+                    });
+                },
+                Add() {
+                    if(this.name === ''){
+                        alert('请输入姓名！');
+                        return
+                    } else if (this.age === ''){
+                        alert('请输入年龄！');
+                        return
+                    }
+                    let arr = []
+                    this.person.forEach((item, index) => {
+                        arr.push(item.id);
+                    });
+                    let max = Math.max.apply(null, arr);
+                    console.log('max', max);
+                    max++;
+                    
+                    let obj = {};
+                    obj.id = max;
+                    obj.name = this.name;
+                    obj.age = this.age;
+                    this.person.push(obj);
+
+                    this.name = '';
+                    this.age = '';
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

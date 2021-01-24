@@ -36,14 +36,17 @@
 
         <table border="1" cellspacing="0" cellpadding="5">
             <tr>
+                <th>id</th>
                 <th>姓名</th>
                 <th>年龄</th>
-                <th>操作</th>
+                <th colspan="2">操作</th>
             </tr>
             <tr v-for="item in person" :key="item.id">
+                <td>{{ item.id }}</td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.age }}</td>
                 <td><button @click="Delete(item.id)">删除</button></td>
+                <td><button @click="Update(item.id)">更新</button></td>
             </tr>
         </table>
     </div>
@@ -57,21 +60,11 @@
                     name: '',
                     age: '',
                     person: [
-                        {
-                            id: 1,
-                            name: 'Jack',
-                            age: 18
-                        },
-                        {
-                            id: 2,
-                            name: 'Marray',
-                            age: 20
-                        },
-                        {
-                            id: 3,
-                            name: 'Bobo',
-                            age: 19
-                        },
+                        { id: 1, name: 'Jack', age: 18},
+                        { id: 2, name: 'Marray', age: 20},
+                        { id: 3, name: 'Bob', age: 19},
+                        { id: 4, name: 'Mike', age: 17},
+                        { id: 5, name: 'Jane', age: 15},
                     ]
                 }
             },
@@ -81,6 +74,14 @@
                     this.person.forEach((item, index) => {
                         if (item.id === id) {
                             this.person.splice(index, 1);
+                        }
+                    });
+                },
+                Update(id){
+                    let date = Date.now();
+                    this.person.forEach((item, index) => {
+                        if (item.id === id) {
+                            this.person[index].id = date;
                         }
                     });
                 },
@@ -108,9 +109,24 @@
 
                     this.name = '';
                     this.age = '';
-                }
+                },
+                
             },
         })
+
+        /* 
+            vue在内部是如何监视数据的变化
+                1. vue会监视data中所有层面的信息
+                2. 对象中的属性数据
+                    给属性添加setter方法
+                3. 数组中元素数据
+                    重写(重新定义)数组一系列更新数组元素的方法
+                    this.person.splice(index, 1);  已经不是原生数组方法，而是vue中重新定义的数组方法。
+
+                    方法的实现
+                        1). 调用原生数组对应的方法，对数组元素进行处理
+                        2). 更新界面
+        */
     </script>
 </body>
 

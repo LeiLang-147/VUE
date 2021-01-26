@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="destroyVM">destory vue</button>
+        <p v-show="isShow">xxxxx</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    isShow: true
+                }
+            },
+            //     mounted
+            //         界面初始显示之后立即回调
+            //         一般在此执行异步操作：发送ajax请求/启动定时器/订阅消息/绑定自定义事件监听
+            mounted() {
+                this.intervalId = setInterval(function () {
+                    this.isShow = !this.isShow;
+                    console.log('--------');
+                }.bind(this), 1000)
+                /* 
+                    1. 返回一个新函数
+                    2. 新函数内部会调用一个新函数(通过call调用)
+                    3. 在调用时指向原函数执行的this为bind()的第一个参数
+                */
+            },
+            // beforeDestroy  在vm死亡之前调用
+            beforeDestroy() {
+                console.log("执行了beforeDestroy")
+                // 清除定时器
+                clearInterval(this.intervalId);
+            },
+            methods: {
+                destroyVM() {
+                    console.log(this);
+                    this.$destory()
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

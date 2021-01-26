@@ -24,8 +24,26 @@
      -->
     <div id="app">
         <h2>1. 绑定监听</h2>
+        <button @click="handler1($event)">handler1</button>
+        <button @click="handler2('atguigu', $event)">handler2</button>
+
         <h2>2. 事件修饰符</h2>
+        <!-- 
+            事件处理的2个中药操作
+                1. 阻止事件的默认行为
+                2. 停止事件冒泡
+         -->
+        <a href="http://www.baidu.com" @click.prevent>百度1</a>
+        <a href="" @click.prevent="handler3($event)">百度2</a>
+
+        <div style="width: 200px; height: 200px; background-color: red;" @click="handler4($event)">
+            <div style="width: 100px; height: 100px; background-color: green;" @click.stop="handler5($event)">
+                <div style="width: 50px; height: 50px; background-color: yellow;" @click.stop="handler6($event)"></div>
+            </div>
+        </div>
+
         <h2>3. 按键修饰符</h2>
+        <input type="text" @keyup.enter="handler7()">
     </div>
 
     <script src="../js/vue.js"></script>
@@ -38,7 +56,28 @@
                 }
             },
             methods: {
-
+                handler1(event) {
+                    alert(event.target.innerHTML);
+                },
+                handler2(name, event) {
+                    alert(name + '---' + event.target.innerHTML);
+                },
+                handler3(event) {
+                    event.target.href = "http://www.baidu.com"
+                    console.log(event.target);
+                },
+                handler4(event){
+                    alert('3');
+                },
+                handler5(event){
+                    alert('2');
+                },
+                handler6(event){
+                    alert('1');
+                },
+                handler7(event){
+                    alert('a')
+                }
             },
         })
     </script>

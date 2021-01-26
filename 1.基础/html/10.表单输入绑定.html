@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10.表单输入绑定</title>
+</head>
+
+<body>
+    <div id="app">
+        <form action="xxx">
+            姓名：<input type="text" v-model="user.username"><br><br>
+            密码：<input type="password" v-model="user.password"><br><br>
+            性别：
+            <input id="male" type="radio" v-model="user.sex" value="男">
+            <label for="femal">男</label>
+            <input id="female" type="radio" v-model="user.sex" value="女">
+            <label for="femal">女</label><br><br>
+            爱好：
+            <input id="basketball" type="checkbox" v-model="user.hobbies" value="篮球">
+            <label for="basket">篮球</label>
+            <input id="football" type="checkbox" v-model="user.hobbies" value="足球">
+            <label for="football">足球</label>
+            <input id="pingpeng" type="checkbox" v-model="user.hobbies" value="乒乓">
+            <label for="pingpeng">乒乓</label><br><br>
+            城市：
+            <select v-model="user.city">
+                <option value="">未选择</option>
+                <option :value="item.cityName" v-for="item in citys" :key="item.id"> {{item.cityName}} </option>
+            </select><br><br>
+            介绍：
+            <textarea rows="10" v-model="user.description"></textarea><br><br>
+
+            <input type="submit" value="注册" @click.prevent="regester">
+
+        </form>
+
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    user: {
+                        username: '',
+                        password: '',
+                        sex: '男',
+                        hobbies: ["足球"],
+                        city: '',
+                        description: ''
+                    },
+                    citys: [
+                        { id: 1, cityName: '北京' },
+                        { id: 2, cityName: '重庆' },
+                        { id: 3, cityName: '深圳' },
+                    ]
+                }
+            },
+            methods: {
+                regester() {
+                    console.log(this.user);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九九乘法表</title>
+    <style>
+        span{
+            display: inline-block;
+            width: 60px;
+            padding: 5px;
+            margin-top: 10px;
+            margin-left: 10px;
+            border-radius: 10px;
+        }
+        .active1{
+            background-color: #eeeeee;
+        }
+        .active2{
+            background-color: burlywood;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div v-for="(i, index1) in 9" :key="index1">
+            <span v-for="(j, index2) in i" :key="index2" :class="index1 % 2 == 0 ? active2 : active1">
+                {{j}}*{{i}}={{j*i}}
+            </span>
+        </div>
+    </div>
+
+    <script src="../1.基础/js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                active1: 'active1',
+                active2: 'active2'
+            }
+        });
+    </script>
+</body>
+
+</html>

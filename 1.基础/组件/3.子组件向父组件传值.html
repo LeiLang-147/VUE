@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <App></App>
+        <Parent></Parent>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+
+        /* 
+            1.在父组件中绑定自定义的事件
+            2.在子组件中触发原生的事件，在函数中使用$emit触发自定义的childHandler
+            3.在子组件中任意使用
+        */
+
+        Vue.component('Parent', {
+            data() {
+                return {
+                    num:''
+                }
+            },
+            template: `
+                <div>
+                    <p>我是父组件--{{num}}</p>
+                    <Child @childHandler2 = 'childHandler2'></Child>
+                    
+                </div>
+            `,
+            methods: {
+                childHandler2(val) {
+                    console.log(val);
+                    this.num = val;
+                },
+            }
+        })
+
+
+        Vue.component('Child', {
+            data() {
+                return {
+                    num: 0
+                }
+            },
+            props: ['childData'],
+            template: `
+                <div>
+                    <p>我是子组件</p>
+                    <button @click='add()'>加一</button>
+                </div>
+            `,
+            methods: {
+                dataChange(val) {
+                    // 自定义事件一定要通过$emit去触发
+                    // $emit(自定义的事件名，传递的数据)
+                    this.$emit('childHandler', val)
+                },
+                add(){
+                    this.$emit('childHandler2', this.num++)
+                }
+            },
+        })
+
+
+
+        var App = {
+            template: `
+                <div>
+                    <p>我是App组件</p>
+                </div>
+            `
+        }
+
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+
+                }
+            },
+            components: {
+                App
+
+            }
+        })
+    </script>
+</body>
+
+</html>

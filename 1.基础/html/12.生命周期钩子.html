@@ -13,7 +13,7 @@
         <p v-show="isShow">xxxxx</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="../js/vue.js"></script>
     <script>
         var vm = new Vue({
             el: "#app",
@@ -22,29 +22,39 @@
                     isShow: true
                 }
             },
-            //     mounted
-            //         界面初始显示之后立即回调
-            //         一般在此执行异步操作：发送ajax请求/启动定时器/订阅消息/绑定自定义事件监听
+            beforeCreate() {
+                console.log('beforeCreate()');
+            },
+            created() {
+                console.log('created()');
+            },
+            beforeMount() {
+                console.log('beforeMount()');
+            },
             mounted() {
+                console.log('mounted()');
+
                 this.intervalId = setInterval(function () {
                     this.isShow = !this.isShow;
-                    console.log('--------');
                 }.bind(this), 1000)
-                /* 
-                    1. 返回一个新函数
-                    2. 新函数内部会调用一个新函数(通过call调用)
-                    3. 在调用时指向原函数执行的this为bind()的第一个参数
-                */
             },
-            // beforeDestroy  在vm死亡之前调用
+            beforeUpdate() {
+                console.log('beforeUpdate()');
+            },
+            updated() {
+                console.log('updated()');
+            },
             beforeDestroy() {
-                console.log("执行了beforeDestroy")
-                // 清除定时器
+                console.log('beforeDestroy()');
                 clearInterval(this.intervalId);
             },
+            destroyed() {
+                console.log('destroyed()');
+            },
+
             methods: {
-                destroyVM() {
-                    console.log(this);
+                destroyVM(){
+                    this.isShow = !this.isShow
                     this.$destroy()
                 }
             },

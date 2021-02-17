@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过滤器</title>
+</head>
+<body>
+    <div id="app">
+        <p>开始时间：{{startTime}}</p>
+        <p>开始时间(完整)：{{startTime | dataFormat}}</p>
+        <p>开始时间(年月日)：{{startTime | dataFormat('YYYY-MM-DD')}}</p>
+        <p>开始时间(时分秒)：{{startTime | dataFormat('HH:mm:ss')}}</p>
+        <br>
+        <hr>
+        <br>
+        <p>{{price}}</p>
+        <p>{{price | myMoney}}</p>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.1/moment.js"></script>
+    <script src="../js/vue.js"></script>
+    <script>
+        // 自定义一个全局过滤器
+        Vue.filter('dataFormat', function(value, formatStr){// value就是需要处理的数据
+            // day-js | moment | date-fns
+            return moment(value).format(formatStr || 'YYYY-MM-DD HH:mm:ss');
+        })
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    startTime: Date.now(),
+                    price: 99.99
+                }
+            },
+            // 局部过滤器
+            filters: {
+                myMoney(value) {
+                    return '￥' + value
+                }
+            }
+        })
+    </script>
+</body>
+</html>

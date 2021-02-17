@@ -32,6 +32,11 @@
         姓名1(单向)：<input type="text" placeholder="Full Name1" v-model="fullName1"><br>
         姓名2(单向)：<input type="text" placeholder="Full Name2" v-model="fullName2"><br>
         姓名3(双向)：<input type="text" placeholder="Full Name3" v-model="fullName3"><br>
+
+
+
+        <br><br>
+        姓名5:<input type="text" placeholder="fullName5" v-model="fullName5[0].name"><br>
     </div>
 
     <script src="../js/vue.js"></script>
@@ -44,7 +49,8 @@
             data: {
                 firstName: 'A',
                 lastName: 'B',
-                fullName2: 'A-B'
+                fullName2: 'A-B',
+                fullName5: [{name:'AAA'}]
             },
             // 计算属性
             computed: {
@@ -71,13 +77,22 @@
                     }
                 }
             },
-            // 监视
+            // 监视  watch监听的是单个属性
+            // 基本数据类型 简单监视
+            // 复杂数据类型 深度监视
             watch: {
                 // 当firstName的值发生改变时调用
                 firstName(value) {
                     console.log('watch firstName', value);
                     // 更新fullName2
                     this.fullName2 = value + '-' + this.lastName;
+                },
+                // 深度监视
+                fullName5:{
+                    deep: true, // 深度监视
+                    handler: function(newV, oldV) {
+                        console.log(newV[0].name);
+                    }
                 },
                 // 监视lastName
                 // lastName(value) {

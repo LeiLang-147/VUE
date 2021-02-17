@@ -47,7 +47,7 @@
         data: 指定初始化状态数据的对象/函数(返回一个对象)
     3)．在页面模板中使用{}或vue指令
     4).MVVM模式
-    M: Mode1(模型)，vue中是data(为view提供数据)
+    M: Model(模型)，vue中是data(为view提供数据)
     V: view(视图)，vue中是模板页面(显示data中的数据)
     VM: viewModel(视图模型)，vue中是Vue实例对象(管理者:数据绑定/DOM监听)
 

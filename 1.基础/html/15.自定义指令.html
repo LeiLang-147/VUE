@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义指令</title>
+</head>
+
+<body>
+    <div id="app">
+        <p v-text="msg"></p>
+        <p v-upper-text="msg"></p>
+        <p v-lower-text="msg"></p>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        /* 
+            1.注册全局指令
+                Vue.directive('my-directive', function(el, binding){
+                    el.innerHTML = binding.value.toUpperCase()
+                })
+            2.注册局部指令
+                directives : {
+                    'my-directive' : {
+                        bind (el, binding) {
+                            el.innerHTML = binding.value.toUpperCase()
+                        }
+                    }
+                }
+            3.使用指令
+                v-my-directive = 'xxx'
+        */
+        // 注册全局指令
+        Vue.directive('upper-text', function (el, binding) {
+            // el: 指令属性所在的标签元素
+            // binding: 包含指令相关数据的对象{value，指令名...}
+            console.log('binding', binding);
+            el.innerHTML = binding.value.toUpperCase()
+        })
+
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    msg: 'CBA I Love This Game!'
+                }
+            },
+            // 注册局部指令
+            directives: {
+                // 'lower-text': {
+                //     bind(el, binding) {
+                //         el.innerHTML = binding.value.toLowerCase()
+                //     }
+                // }
+
+
+                // 'lower-text': function (el, binding) {
+                //     el.innerHTML = binding.value.toLowerCase();
+                // }
+
+                'lower-text'(el, binding) {
+                    el.innerHTML = binding.value.toLowerCase();
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

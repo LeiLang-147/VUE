@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transition</title>
+    <style>
+        /* 指定显示/隐藏的过度样式 */
+        .move-enter-active, .move-leave-active {
+            transition: opacity 5s;
+        }
+        /* 指定隐藏时的样式 */
+        .move-enter, .move-leave-to {
+            opacity: 0;
+        }
+
+        /* 指定显示的过度样式 */
+        .move2-enter-active {
+            transition: all 1s;
+        }
+        /* 指定隐藏的过度样式 */
+        .move2-leave-active {
+            transition: all 3s;
+        }
+        .move2-enter, .move2-leave-to {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+
+        /* 显示动画 */
+        .move3-enter-active {
+            animation: move3 .5s;
+        }
+        /* 隐藏动画 */
+        .move3-leave-active {
+            animation: move3 .5s reverse;
+        }
+        @keyframes move3 {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click="show = !show">切换</button>
+        <transition name="move">
+            <p v-show="show">hello</p>
+        </transition>
+    </div>
+
+    <div id="app2">
+        <button @click="show = !show">切换</button>
+        <transition name="move2">
+            <p v-show="show">hello2</p>
+        </transition>
+    </div>
+
+    <div id="app3">
+        <button @click="show = !show">切换</button><br>
+        <transition name="move3">
+            <p v-show="show" style="display: inline-block;">hello3 hello3 hello3 hello3 hello3 hello3 hello3 hello3</p>
+        </transition>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    show: true
+                }
+            },
+        })
+
+
+        new Vue({
+            el: "#app2",
+            data() {
+                return {
+                    show: true
+                }
+            },
+        })
+
+        new Vue({
+            el: "#app3",
+            data() {
+                return {
+                    show: true
+                }
+            },
+        })
+    </script>
+    
+</body>
+</html>

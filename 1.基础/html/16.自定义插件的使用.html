@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义插件的使用</title>
+</head>
+<body>
+    <div id="app">
+        <p v-my-directive="msg"></p>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script src="../自定义插件/vue-myPlugin.js"></script>
+    <script>
+        // 声明使用插件
+        Vue.use(MyPlugin) // 内部会调用MyPlugin的install方法，来安装此插件
+
+        Vue.myGlobalMethod()
+
+        const vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: 'abcd'
+                }
+            },
+        })
+        vm.$myMethod()
+    </script>
+</body>
+</html>
